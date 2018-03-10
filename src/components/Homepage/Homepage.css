@@ -1,0 +1,47 @@
+/*News-Articles*/
+.container {
+	display: flex;
+	margin: 0 auto;
+	max-width: 90vw;
+}
+
+@media (max-width: 1024px) {
+	.container {
+		flex-direction: column;
+	}
+	.content {
+		min-height: 200px;
+	}
+}
+
+.content {
+	flex: 1;
+	max-height: 350px;
+	overflow: auto;
+	border: 1px solid black;
+}
+
+#cnn-content{
+	background: rgba(139, 0, 0, 0.5);
+}
+
+#fox-content{
+	background-color: rgba(70, 130, 180, 0.5);
+}
+
+#breitbart-content {
+	background-color: rgba(255, 69, 0, 0.5);
+}
+
+#msnbc-content {
+	background-color: rgba(192, 192, 192, 0.5);
+}
+
+.headline {
+	position: relative;
+	margin-top: 2rem;
+}
+
+.text {
+	padding: 0 20px;
+}
