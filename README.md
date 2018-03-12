@@ -1,3 +1,19 @@
+# News-From
+
+[Heroku Link TBA](https://www.linkedin.com/in/juliusgdorfman.com)
+
+## Description
+News scraper for most popular news sites' top article aggregated onto one page.
+
+## Built with
+- React
+- Javascript
+- HTML5 & CSS3
+
+
+
+## BELOW IS REACT FROM THE BOX README
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
