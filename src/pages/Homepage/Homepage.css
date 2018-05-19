@@ -1,4 +1,6 @@
 /*News-Articles*/
+
+
 .container {
 	display: flex;
 	margin: 0 auto;
@@ -20,6 +22,12 @@
 	overflow: auto;
 	border: 1px solid black;
 }
+
+.content h3 {
+	font-size: 1rem;
+}
+
+article{}
 
 #cnn-content{
 	background: rgba(139, 0, 0, 0.5);

@@ -1,38 +1,39 @@
 html {
-    background: url("/assets/images/paper_background.jpg");
-    background-size: cover;
-    background-attachment: fixed;
+  background: url("/assets/images/paper_background.jpg");
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 .App {
-    text-align: center;
+  text-align: center;
 }
 
 .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-    height: 80px;
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
 }
 
 @keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 h1 {
-    display: inline;
+  display: inline;
 }
 
 header {
-	margin: 3rem;
+  margin: 3rem;
 }
+
 
 
 /*Images*/
 
 .news-from-logo {
-    height: 50px;
+  height: 50px;
 }
