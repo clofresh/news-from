@@ -78,14 +78,12 @@ export class Homepage extends React.Component {
 						{this.state.cnnIsLoading === true ? (
 							<div className="spinner-overlay">
 								<img
-									className="spinner-image"
+									className="loading-spinner"
 									src="/assets/images/news-from-logo.png"
-									alt="spinner-image"
+									alt="loading-spinner"
 								/>
 							</div>
 						) : (
-							<span />
-						)}
 						<div className="articles">
 							{this.state.cnn.map((cnnItem, index) => {
 								while (index < 5) {
@@ -98,6 +96,7 @@ export class Homepage extends React.Component {
 								}
 							})}
 						</div>
+						)}
 					</div>
 					<div className="content" id="fox-content">
 						<div className="headline">
@@ -106,14 +105,12 @@ export class Homepage extends React.Component {
 						{this.state.foxIsLoading === true ? (
 							<div className="spinner-overlay">
 								<img
-									className="spinner-image"
+									className="loading-spinner"
 									src="/assets/images/news-from-logo.png"
-									alt="spinner-image"
+									alt="loading-spinner"
 								/>
 							</div>
 						) : (
-							<span />
-						)}
 						<div className="articles">
 							{this.state.fox.map((foxItem, index) => {
 								while (index < 5) {
@@ -126,6 +123,7 @@ export class Homepage extends React.Component {
 								}
 							})}
 						</div>
+						)}
 					</div>
 					<div className="content" id="breitbart-content">
 						<div className="headline">
@@ -134,26 +132,25 @@ export class Homepage extends React.Component {
 						{this.state.breitbartIsLoading === true ? (
 							<div className="spinner-overlay">
 								<img
-									className="spinner-image"
+									className="loading-spinner"
 									src="/assets/images/news-from-logo.png"
-									alt="spinner-image"
+									alt="loading-spinner"
 								/>
 							</div>
 						) : (
-							<span />
+							<div className="articles">
+								{this.state.breitbart.map((breitbartItem, index) => {
+									while (index < 5) {
+										return (
+											<article key={'breitbart' + index}>
+												<h3 key={breitbartItem.title}>{breitbartItem.title}</h3>
+												{/*<p>{breitbartItem.description}</p>*/}
+											</article>
+										);
+									}
+								})}
+							</div>
 						)}
-						<div className="articles">
-							{this.state.breitbart.map((breitbartItem, index) => {
-								while (index < 5) {
-									return (
-										<article key={'breitbart' + index}>
-											<h3 key={breitbartItem.title}>{breitbartItem.title}</h3>
-											{/*<p>{breitbartItem.description}</p>*/}
-										</article>
-									);
-								}
-							})}
-						</div>
 					</div>
 					<div className="content" id="msnbc-content">
 						<div className="headline">
@@ -162,14 +159,12 @@ export class Homepage extends React.Component {
 						{this.state.msnbcIsLoading === true ? (
 							<div className="spinner-overlay">
 								<img
-									className="spinner-image"
+									className="loading-spinner"
 									src="/assets/images/news-from-logo.png"
-									alt="spinner-image"
+									alt="loading-spinner"
 								/>
 							</div>
 						) : (
-							<span />
-						)}
 						<div className="articles">
 							{this.state.msnbc.map((msnbcItem, index) => {
 								while (index < 5) {
@@ -182,6 +177,7 @@ export class Homepage extends React.Component {
 								}
 							})}
 						</div>
+						)}
 					</div>
 				</div>
 			</div>

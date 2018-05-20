@@ -67,7 +67,7 @@ article {
 	background-color: rgba(0, 0, 0, 0);
 }
 
-.spinner-image {
+.loading-spinner {
 	height: 100px;
 	width: 100px;
 	animation: loading-spinner infinite 20s linear;
