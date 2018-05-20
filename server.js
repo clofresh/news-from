@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 5000;
 const bodyParser = require('body-parser');
 const cnnProvider = require('./src/providers/cnnProvider');
 const breitbartProvider = require('./src/providers/breitbartProvider');
@@ -23,6 +22,7 @@ app.use('/', (req, res) => {
 });
 
 // Listen on Port for changes
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
 	console.log("Server listening on port: " + port);
 });

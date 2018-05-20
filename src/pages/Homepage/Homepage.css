@@ -22,11 +22,25 @@
 	border: 1px solid black;
 }
 
-.content h3 {
-	font-size: 1rem;
+article {
+	margin-bottom: 30px;
+	padding: 3%;
 }
 
-article {
+.news-site {
+	text-align: center;
+}
+
+.article-date {
+	text-align: left;
+	font-size: 0.6rem;
+	font-weight: 730;
+}
+
+.article-title {
+	text-align: center;
+	font-size: 0.75rem;
+	font-weight: 900;
 }
 
 #cnn-content {
@@ -73,12 +87,11 @@ article {
 	animation: loading-spinner infinite 20s linear;
 }
 
-
 @keyframes loading-spinner {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
