@@ -1,6 +1,5 @@
 /*News-Articles*/
 
-
 .container {
 	display: flex;
 	margin: 0 auto;
@@ -27,13 +26,14 @@
 	font-size: 1rem;
 }
 
-article{}
+article {
+}
 
-#cnn-content{
+#cnn-content {
 	background: rgba(139, 0, 0, 0.5);
 }
 
-#fox-content{
+#fox-content {
 	background-color: rgba(70, 130, 180, 0.5);
 }
 
@@ -52,4 +52,33 @@ article{}
 
 .text {
 	padding: 0 20px;
+}
+
+/*Loading Spinner*/
+
+.spinner-overlay {
+	position: relative;
+	display: block;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+.spinner-image {
+	height: 100px;
+	width: 100px;
+	animation: loading-spinner infinite 20s linear;
+}
+
+
+@keyframes loading-spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

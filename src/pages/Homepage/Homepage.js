@@ -6,6 +6,10 @@ export class Homepage extends React.Component {
 	constructor() {
 		super();
 		this.state = {
+			cnnIsLoading: true,
+			foxIsLoading: true,
+			breitbartIsLoading: true,
+			msnbcIsLoading: true,
 			cnn: [],
 			fox: [],
 			breitbart: [],
@@ -18,7 +22,8 @@ export class Homepage extends React.Component {
 			.get('/api/cnn')
 			.then(res => {
 				this.setState({
-					cnn: res.data.items
+					cnn: res.data.items,
+					cnnIsLoading: false
 				});
 			})
 			.catch(function(err) {
@@ -29,7 +34,8 @@ export class Homepage extends React.Component {
 			.get('/api/fox')
 			.then(res => {
 				this.setState({
-					fox: res.data.items
+					fox: res.data.items,
+					foxIsLoading: false
 				});
 			})
 			.catch(function(err) {
@@ -40,7 +46,8 @@ export class Homepage extends React.Component {
 			.get('/api/breitbart')
 			.then(res => {
 				this.setState({
-					breitbart: res.data.items
+					breitbart: res.data.items,
+					breitbartIsLoading: false
 				});
 			})
 			.catch(function(err) {
@@ -51,7 +58,8 @@ export class Homepage extends React.Component {
 			.get('/api/msnbc')
 			.then(res => {
 				this.setState({
-					msnbc: res.data.items
+					msnbc: res.data.items,
+					msnbcIsLoading: false
 				});
 			})
 			.catch(function(err) {
@@ -67,6 +75,17 @@ export class Homepage extends React.Component {
 						<div className="headline">
 							<h2>CNN</h2>
 						</div>
+						{this.state.cnnIsLoading === true ? (
+							<div className="spinner-overlay">
+								<img
+									className="spinner-image"
+									src="/assets/images/news-from-logo.png"
+									alt="spinner-image"
+								/>
+							</div>
+						) : (
+							<span />
+						)}
 						<div className="articles">
 							{this.state.cnn.map((cnnItem, index) => {
 								while (index < 5) {
@@ -84,6 +103,17 @@ export class Homepage extends React.Component {
 						<div className="headline">
 							<h2>Fox</h2>
 						</div>
+						{this.state.foxIsLoading === true ? (
+							<div className="spinner-overlay">
+								<img
+									className="spinner-image"
+									src="/assets/images/news-from-logo.png"
+									alt="spinner-image"
+								/>
+							</div>
+						) : (
+							<span />
+						)}
 						<div className="articles">
 							{this.state.fox.map((foxItem, index) => {
 								while (index < 5) {
@@ -101,6 +131,17 @@ export class Homepage extends React.Component {
 						<div className="headline">
 							<h2>Breitbart</h2>
 						</div>
+						{this.state.breitbartIsLoading === true ? (
+							<div className="spinner-overlay">
+								<img
+									className="spinner-image"
+									src="/assets/images/news-from-logo.png"
+									alt="spinner-image"
+								/>
+							</div>
+						) : (
+							<span />
+						)}
 						<div className="articles">
 							{this.state.breitbart.map((breitbartItem, index) => {
 								while (index < 5) {
@@ -118,6 +159,17 @@ export class Homepage extends React.Component {
 						<div className="headline">
 							<h2>MSNBC</h2>
 						</div>
+						{this.state.msnbcIsLoading === true ? (
+							<div className="spinner-overlay">
+								<img
+									className="spinner-image"
+									src="/assets/images/news-from-logo.png"
+									alt="spinner-image"
+								/>
+							</div>
+						) : (
+							<span />
+						)}
 						<div className="articles">
 							{this.state.msnbc.map((msnbcItem, index) => {
 								while (index < 5) {
