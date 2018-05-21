@@ -1,7 +1,11 @@
 import React from 'react';
-import './Homepage.css';
+import { Scrollbars } from 'react-custom-scrollbars';
+
 import axios from 'axios';
 import moment from 'moment';
+
+import './Homepage.css';
+
 export class Homepage extends React.Component {
 	constructor() {
 		super();
@@ -25,7 +29,7 @@ export class Homepage extends React.Component {
 					cnn: res.data.items,
 					cnnIsLoading: false
 				});
-				console.log("cnn res", res)
+				console.log('cnn res', res);
 			})
 			.catch(function(err) {
 				console.log(err);
@@ -68,6 +72,8 @@ export class Homepage extends React.Component {
 			});
 	}
 
+	componentDidMount() {}
+
 	render() {
 		return (
 			<div className="homepage">
@@ -76,113 +82,203 @@ export class Homepage extends React.Component {
 						<div className="news-site">
 							<h2>CNN</h2>
 						</div>
-						{this.state.cnnIsLoading === true ? (
-							<div className="spinner-overlay">
-								<img
-									className="loading-spinner"
-									src="/assets/images/news-from-logo.png"
-									alt="loading-spinner"
-								/>
-							</div>
-						) : (
-							<div className="articles">
-								{this.state.cnn.map((cnnItem, index) => {
-									while (index < 5) {
-										return (
-											<article key={'cnn' + index}>
-												<time className="article-date" key={'cnn' + cnnItem.created}>{moment(cnnItem.created).format('MMMM Do YYYY, h:mm:ss a')}</time>
-												<h3 className="article-title" key={cnnItem.title}>{cnnItem.title}</h3>
-												{/*<p>{cnnItem.description}</p>*/}
-											</article>
-										);
-									}
-								})}
-							</div>
-						)}
+						<Scrollbars universal autoHeight autoHeightMin={60 + 'vh'}>
+							{this.state.cnnIsLoading === true ? (
+								<div className="spinner-overlay">
+									<img
+										className="loading-spinner"
+										src="/assets/images/news-from-logo.png"
+										alt="loading-spinner"
+									/>
+								</div>
+							) : (
+								<div className="articles">
+									{this.state.cnn.map((cnnItem, index) => {
+										while (index < 5) {
+											return (
+												<article key={'cnn' + index}>
+													<div className="overlay">
+														<time
+															className="article-date"
+															key={'cnn' + cnnItem.created}
+														>
+															{moment(cnnItem.created).format(
+																'MMMM Do YYYY, h:mm a'
+															)}
+														</time>
+														<h3
+															className="article-headline"
+															key={cnnItem.title}
+														>
+															{cnnItem.title}
+														</h3>
+														{/*<p>{cnnItem.description}</p>*/}
+														{
+															<a className="article-link" href={cnnItem.url}>
+																...->
+															</a>
+														}
+													</div>
+												</article>
+											);
+										}
+									})}
+								</div>
+							)}
+						</Scrollbars>
 					</div>
 					<div className="content" id="fox-content">
 						<div className="news-site">
 							<h2>Fox</h2>
 						</div>
-						{this.state.foxIsLoading === true ? (
-							<div className="spinner-overlay">
-								<img
-									className="loading-spinner"
-									src="/assets/images/news-from-logo.png"
-									alt="loading-spinner"
-								/>
-							</div>
-						) : (
-							<div className="articles">
-								{this.state.fox.map((foxItem, index) => {
-									while (index < 5) {
-										return (
-											<article key={'fox' + index}>
-												<time className="article-date" key={'fox' + foxItem.created}>{moment(foxItem.created).format('MMMM Do YYYY, h:mm:ss a')}</time>
-												<h3 className="article-title" key={foxItem.title}>{foxItem.title}</h3>
-												{/*<p>{foxItem.description}</p>*/}
-											</article>
-										);
-									}
-								})}
-							</div>
-						)}
+						<Scrollbars universal autoHeight autoHeightMin={60 + 'vh'}>
+							{this.state.foxIsLoading === true ? (
+								<div className="spinner-overlay">
+									<img
+										className="loading-spinner"
+										src="/assets/images/news-from-logo.png"
+										alt="loading-spinner"
+									/>
+								</div>
+							) : (
+								<div className="articles">
+									{this.state.fox.map((foxItem, index) => {
+										while (index < 5) {
+											return (
+												<article key={'fox' + index}>
+													<div className="overlay">
+														<time
+															className="article-date"
+															key={'fox' + foxItem.created}
+														>
+															{moment(foxItem.created).format(
+																'MMMM Do YYYY, h:mm a'
+															)}
+														</time>
+														<h3
+															className="article-headline"
+															key={foxItem.title}
+														>
+															{foxItem.title}
+														</h3>
+														{/*<p>{foxItem.description}</p>*/}
+														{
+															<a className="article-link" href={foxItem.url}>
+																...->
+															</a>
+														}
+													</div>
+												</article>
+											);
+										}
+									})}
+								</div>
+							)}
+						</Scrollbars>
 					</div>
+				</div>
+
+				<div className="container">
 					<div className="content" id="breitbart-content">
 						<div className="news-site">
 							<h2>Breitbart</h2>
 						</div>
-						{this.state.breitbartIsLoading === true ? (
-							<div className="spinner-overlay">
-								<img
-									className="loading-spinner"
-									src="/assets/images/news-from-logo.png"
-									alt="loading-spinner"
-								/>
-							</div>
-						) : (
-							<div className="articles">
-								{this.state.breitbart.map((breitbartItem, index) => {
-									while (index < 5) {
-										return (
-											<article key={'breitbart' + index}>
-												<time className="article-date" key={'breitbart' + breitbartItem.created}>{moment(breitbartItem.created).format('MMMM Do YYYY, h:mm:ss a')}</time>
-												<h3 className="article-title" key={breitbartItem.title}>{breitbartItem.title}</h3>
-												{/*<p>{breitbartItem.description}</p>*/}
-											</article>
-										);
-									}
-								})}
-							</div>
-						)}
+						<Scrollbars universal autoHeight autoHeightMin={60 + 'vh'}>
+							{this.state.breitbartIsLoading === true ? (
+								<div className="spinner-overlay">
+									<img
+										className="loading-spinner"
+										src="/assets/images/news-from-logo.png"
+										alt="loading-spinner"
+									/>
+								</div>
+							) : (
+								<div className="articles">
+									{this.state.breitbart.map((breitbartItem, index) => {
+										while (index < 5) {
+											return (
+												<article key={'breitbart' + index}>
+													<div className="overlay">
+														<time
+															className="article-date"
+															key={'breitbart' + breitbartItem.created}
+														>
+															{moment(breitbartItem.created).format(
+																'MMMM Do YYYY, h:mm a'
+															)}
+														</time>
+														<h3
+															className="article-headline"
+															key={breitbartItem.title}
+														>
+															{breitbartItem.title}
+														</h3>
+														{/*<p>{breitbartItem.description}</p>*/}
+														{
+															<a
+																className="article-link"
+																href={breitbartItem.url}
+															>
+																...->
+															</a>
+														}
+													</div>
+												</article>
+											);
+										}
+									})}
+								</div>
+							)}
+						</Scrollbars>
 					</div>
 					<div className="content" id="msnbc-content">
 						<div className="news-site">
 							<h2>MSNBC</h2>
 						</div>
-						{this.state.msnbcIsLoading === true ? (
-							<div className="spinner-overlay">
-								<img
-									className="loading-spinner"
-									src="/assets/images/news-from-logo.png"
-									alt="loading-spinner"
-								/>
-							</div>
-						) : (
-							<div className="articles">
-								{this.state.msnbc.map((msnbcItem, index) => {
-									while (index < 5) {
-										return (
-											<article key={'msnbc' + index}>
-												<time className="article-date" key={'msnbc' + msnbcItem.created}>{moment(msnbcItem.created).format('MMMM Do YYYY, h:mm:ss a')}</time>
-												<h3 className="article-title" key={msnbcItem.title}>{msnbcItem.title}</h3>
-												{/*<p>{msnbcItem.description}</p>*/}
-											</article>
-										);
-									}
-								})}
-							</div>
-						)}
+						<Scrollbars universal autoHeight autoHeightMin={60 + 'vh'}>
+							{this.state.msnbcIsLoading === true ? (
+								<div className="spinner-overlay">
+									<img
+										className="loading-spinner"
+										src="/assets/images/news-from-logo.png"
+										alt="loading-spinner"
+									/>
+								</div>
+							) : (
+								<div className="articles">
+									{this.state.msnbc.map((msnbcItem, index) => {
+										while (index < 5) {
+											return (
+												<article key={'msnbc' + index}>
+													<div className="overlay">
+														<time
+															className="article-date"
+															key={'msnbc' + msnbcItem.created}
+														>
+															{moment(msnbcItem.created).format(
+																'MMMM Do YYYY, h:mm a'
+															)}
+														</time>
+														<h3
+															className="article-headline"
+															key={msnbcItem.title}
+														>
+															{msnbcItem.title}
+														</h3>
+														{/*<p>{msnbcItem.description}</p>*/}
+														{
+															<a className="article-link" href={msnbcItem.url}>
+																...->
+															</a>
+														}
+													</div>
+												</article>
+											);
+										}
+									})}
+								</div>
+							)}
+						</Scrollbars>
 					</div>
 				</div>
 			</div>
