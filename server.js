@@ -13,6 +13,7 @@ const cnnProvider = require('./src/providers/cnnProvider');
 const breitbartProvider = require('./src/providers/breitbartProvider');
 const msnbcProvider = require('./src/providers/msnbcProvider');
 const foxProvider = require('./src/providers/foxProvider');
+
 app.use('/api/cnn', cnnProvider);
 app.use('/api/breitbart', breitbartProvider);
 app.use('/api/msnbc', msnbcProvider);
