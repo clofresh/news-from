@@ -4,76 +4,77 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import axios from 'axios';
 import moment from 'moment';
 
+import services from '../../services/getRssService.js';
+
 import './Homepage.css';
 
 export class Homepage extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			cnnIsLoading: true,
-			foxIsLoading: true,
-			breitbartIsLoading: true,
-			msnbcIsLoading: true,
-			cnn: [],
-			fox: [],
-			breitbart: [],
-			msnbc: []
-		};
-	}
+        constructor(props) {
+            super(props);
+            this.state = {
+                cnnIsLoading: true,
+                foxIsLoading: true,
+                breitbartIsLoading: true,
+                msnbcIsLoading: true,
+                cnn: [],
+                fox: [],
+                breitbart: [],
+                msnbc: []
+            };
+        }
+        
+        componentWillMount() {
+            services.loadCnn()
+                .then(res => {
+                    this.setState({
+                        cnn: res.data.items,
+                        cnnIsLoading: false
+                    });
+                    console.log('cnn res', res);
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
 
-	componentWillMount() {
-		axios
-			.get('/api/cnn')
-			.then(res => {
-				this.setState({
-					cnn: res.data.items,
-					cnnIsLoading: false
-				});
-				console.log('cnn res', res);
-			})
-			.catch(function(err) {
-				console.log(err);
-			});
+            services.loadFox()
+                .then(res => {
+                    this.setState({
+                        fox: res.data.items,
+                        foxIsLoading: false
+                    });
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
 
-		axios
-			.get('/api/fox')
-			.then(res => {
-				this.setState({
-					fox: res.data.items,
-					foxIsLoading: false
-				});
-			})
-			.catch(function(err) {
-				console.log(err);
-			});
+            axios.get('/api/breitbart')
+                .then(res => {
+                    this.setState({
+                        breitbart: res.data.items,
+                        breitbartIsLoading: false
+                    });
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
 
-		axios
-			.get('/api/breitbart')
-			.then(res => {
-				this.setState({
-					breitbart: res.data.items,
-					breitbartIsLoading: false
-				});
-			})
-			.catch(function(err) {
-				console.log(err);
-			});
+            services.loadMsnbc()
+                .then(res => {
+                    this.setState({
+                        msnbc: res.data.items,
+                        msnbcIsLoading: false
+                    });
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
+        };
 
-		axios
-			.get('/api/msnbc')
-			.then(res => {
-				this.setState({
-					msnbc: res.data.items,
-					msnbcIsLoading: false
-				});
-			})
-			.catch(function(err) {
-				console.log(err);
-			});
-	}
+        componentDidMount() {
 
-	componentDidMount() {}
+        }
 
+        
 	render() {
 		return (
 			<div className="homepage">
@@ -122,6 +123,7 @@ export class Homepage extends React.Component {
 												</article>
 											);
 										}
+										return null;
 									})}
 								</div>
 							)}
@@ -171,6 +173,7 @@ export class Homepage extends React.Component {
 												</article>
 											);
 										}
+										return null;
 									})}
 								</div>
 							)}
@@ -226,6 +229,7 @@ export class Homepage extends React.Component {
 												</article>
 											);
 										}
+										return null;
 									})}
 								</div>
 							)}
@@ -275,6 +279,7 @@ export class Homepage extends React.Component {
 												</article>
 											);
 										}
+										return null;
 									})}
 								</div>
 							)}
