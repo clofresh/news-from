@@ -4,7 +4,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import axios from 'axios';
 import moment from 'moment';
 
-import services from '../../services/getRssService.js';
+import services from '../../services/rssService.js';
 
 import './Homepage.css';
 

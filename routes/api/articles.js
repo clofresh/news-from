@@ -10,7 +10,6 @@ const Article = require('../../models/Article.js');
 // @Route GET api/articles/test
 // @Desc test Get route being called
 // @Access Public
-
 router.get('/test', (req, res) => {
     res.json({ Hello: "test route works" })
 });
@@ -21,6 +20,7 @@ router.get('/test', (req, res) => {
 router.get('/', (req, res) => {
     Article.find()
         .sort({ created: -1 })
+        // http calls are only made in strings (the network) so res.json is serializing the data into json turning that object into a string so that when deserialized able to turn into an object
         .then(articles => res.json(articles))
         .catch(err =>
             res.status(404).json({ noarticlesfound: 'No articles found' })
@@ -28,20 +28,20 @@ router.get('/', (req, res) => {
 });
 
 // @Route POST api/articles/
-// @Desc Post All Articles
 // @Access Public
+// @Desc Post All Articles
 router.post('/', (req, res) => {
-
     const newArticle = new Article({
-        title: articles.title,
-        created: articles.created,
-        url: articles.url
+        title: req.body.title,
+        created: req.body.created,
+        url: req.body.url
     });
     newArticle.save()
         .then(articleItem => res.json(articleItem), (err) =>
             res.send(500, { err: err }))
         .catch(error => res.json({ newArticle_error: error }))
 });
+
 module.exports = router;
 
 
