@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const ArticleSchema = new Schema({
     title: {
     	type: String
-    }
+    },
     // ,
     // created: {
     // 	type: Number
@@ -15,9 +15,9 @@ const ArticleSchema = new Schema({
     // url: {
     // 	type: String
     // },
-    // site: {
-    // 	type: String
-    // }
+    site: {
+    	type: String
+    }
 });
 
 module.exports = Article = mongoose.model('article', ArticleSchema);

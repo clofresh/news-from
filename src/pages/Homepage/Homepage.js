@@ -4,74 +4,57 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import axios from 'axios';
 import moment from 'moment';
 
-import services from '../../services/rssService.js';
+// import services from '../../services/rssService.js';
 
 import './Homepage.css';
 
 export class Homepage extends React.Component {
-        constructor(props) {
-            super(props);
-            this.state = {
-                cnnIsLoading: true,
-                foxIsLoading: true,
-                breitbartIsLoading: true,
-                msnbcIsLoading: true,
-                cnn: [],
-                fox: [],
-                breitbart: [],
-                msnbc: []
-            };
-        }
-        
-        componentWillMount() {
+	constructor(props) {
+		super(props);
+		this.state = {
+			cnnIsLoading: true,
+			foxIsLoading: true,
+			breitbartIsLoading: true,
+			msnbcIsLoading: true,
+			cnn: [],
+			fox: [],
+			breitbart: [],
+			msnbc: []
+		};
+	}
 
-        axios.get('/routes/api/articles')
-            .then(res => {
-            	this.setState({
-            		cnn: res.data,
-            		cnnIsLoading: false
-            	})
-            })
+	componentWillMount() {
+		axios.get('/routes/api/cnnArticles').then(res => {
+			this.setState({
+				cnn: res.data,
+				cnnIsLoading: false
+			});
+		});
 
-            services.loadFox()
-                .then(res => {
-                    this.setState({
-                        fox: res.data.items,
-                        foxIsLoading: false
-                    });
-                })
-                .catch(function(err) {
-                    console.log(err);
-                });
+		axios.get('/routes/api/foxArticles').then(res => {
+			this.setState({
+				fox: res.data,
+				foxIsLoading: false
+			});
+		});
 
-            axios.get('/api/breitbart')
-                .then(res => {
-                    this.setState({
-                        breitbart: res.data.items,
-                        breitbartIsLoading: false
-                    });
-                })
-                .catch(function(err) {
-                    console.log(err);
-                });
+		axios.get('/routes/api/breitbartArticles').then(res => {
+			this.setState({
+				breitbart: res.data,
+				breitbartIsLoading: false
+			});
+		});
 
-            services.loadMsnbc()
-                .then(res => {
-                    this.setState({
-                        msnbc: res.data.items,
-                        msnbcIsLoading: false
-                    });
-                })
-                .catch(function(err) {
-                    console.log(err);
-                });
-        };
+		axios.get('/routes/api/msnbcArticles').then(res => {
+			this.setState({
+				msnbc: res.data,
+				msnbcIsLoading: false
+			});
+		});
+	}
 
-        componentDidMount() {
+	componentDidMount() {}
 
-        }
-
-        
 	render() {
 		return (
 			<div className="homepage">
