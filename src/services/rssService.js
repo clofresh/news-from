@@ -1,5 +1,4 @@
 import axios from 'axios';
-import mongoose from 'mongoose';
 
 export default {
     loadCnn: function() {

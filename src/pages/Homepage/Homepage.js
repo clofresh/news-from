@@ -24,17 +24,14 @@ export class Homepage extends React.Component {
         }
         
         componentWillMount() {
-            services.loadCnn()
-                .then(res => {
-                    this.setState({
-                        cnn: res.data.items,
-                        cnnIsLoading: false
-                    });
-                    console.log('cnn res', res);
-                })
-                .catch(function(err) {
-                    console.log(err);
-                });
+
+        axios.get('/routes/api/articles')
+            .then(res => {
+            	this.setState({
+            		cnn: res.data,
+            		cnnIsLoading: false
+            	})
+            })
 
             services.loadFox()
                 .then(res => {

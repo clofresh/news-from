@@ -7,12 +7,47 @@ const Feed = require('rss-to-json');
 const Article = require('../../models/Article.js');
 
 
-// @Route GET api/articles/test
-// @Desc test Get route being called
+// @Route GET /routes/api/articles/test
+// @Desc TEST Get Route being called
 // @Access Public
-router.get('/test', (req, res) => {
-    res.json({ Hello: "test route works" })
+router.post('/test', (req, res) => {
+    Feed.load('http://rss.cnn.com/rss/cnn_topstories.rss', function(err, rss) {
+        rss.items.map((rssArticles, index) => {
+
+            const newArticle = new Article({
+                title: rssArticles.title
+                // ,
+                // created: rssArticles.created,
+                // url: rssArticles.url
+            });
+
+            //TODO: SEARCH DATABASE FOR DUPLICATE BEFORE ADDING
+            // Article.findOne({ "title": newArticle.title }, (err, dbArticle) => {
+            //     console.log('dbArticle', dbArticle.title)
+            //     console.log('newArticle', newArticle.title)
+            //     if (dbArticle.title === newArticle.title) {
+            //         console.log("DUPLICATE")
+            //     } else {
+            //         console.log('ADD TO DATABASE NO MATCH', newArticle);
+            //         newArticle
+            //             .save((err, articleItem) => {
+            //                 if (err) return err;
+            //                 res.json(articleItem)
+            //             })
+            //     }
+            // });
+
+            newArticle
+                .save()
+                .then(articleItem => {
+                    res.json(articleItem)
+                }).catch(error =>
+                    res.status(404).json({ newArticle_error: "POST ERROR: " + error }))
+        })
+    })
 });
+
+
 
 // @Route GET api/articles/
 // @Desc GET all articles route
@@ -31,20 +66,31 @@ router.get('/', (req, res) => {
 // @Access Public
 // @Desc Post All Articles
 router.post('/', (req, res) => {
-    const newArticle = new Article({
-        title: req.body.title,
-        created: req.body.created,
-        url: req.body.url
-    });
-    newArticle.save()
-        .then(articleItem => res.json(articleItem), (err) =>
-            res.send(500, { err: err }))
-        .catch(error => res.json({ newArticle_error: error }))
-});
+    Feed.load('http://rss.cnn.com/rss/cnn_topstories.rss', function(err, rss) {
+        rss.items.map(articles => {
 
+            const newArticle = new Article({
+                title: articles.title,
+                description: articles.description,
+                created: articles.created,
+                url: articles.url
+            });
+
+            // Article.findOne({ "article.title": newArticle.title }, (err, article) => {
+            //     console.log('article', newArticle)
+            //     // if (newArticle.title === article.title) {
+            //     //     // console.log("ARTICLE.TITLE MATCH", newArticle.title)
+            //     // } else {
+            //     //     // console.log('ARTICLE.TITLE NO MATCH', article.title)
+            //     // }
+            // })
+            newArticle
+                .save()
+                .then(articleItem => {
+                    res.json(articleItem)
+                }).catch(error =>
+                    res.status(404).json({ newArticle_error: "POST ERROR: " + error }))
+        })
+    })
+})
 module.exports = router;
-
-
-
-// Feed.load('http://rss.cnn.com/rss/cnn_topstories.rss', function(err, rss) {
-//     rss.items.map(articles => {

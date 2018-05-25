@@ -31,7 +31,7 @@ const db = require('./config/keys').mongoURI
 mongoose
 	.connect(db)
 	.then(() => console.log('MongoDB Connected'))
-	.catch(err => console.log("Error Connecting to Database" + err))
+	.catch(err => console.log("Error Connecting to Database: " + err))
 
 // Listen on Port for changes
 const port = process.env.PORT || 5000;
