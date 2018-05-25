@@ -21,6 +21,7 @@ export class Homepage extends React.Component {
 			breitbart: [],
 			msnbc: []
 		};
+		this.onRefresh = this.onRefresh.bind(this);
 	}
 
 	componentWillMount() {
@@ -30,9 +31,12 @@ export class Homepage extends React.Component {
 		this.initializeMsnbc();
 	}
 
-	componentDidMount() {}
+	componentDidMount() {
+		console.log('Mounted Component Homepage');
+	}
 
 	initializeCnn() {
+		console.log('initializeCnn');
 		axios.get('/routes/api/cnnArticles').then(res => {
 			this.setState({
 				cnn: res.data,
@@ -42,6 +46,7 @@ export class Homepage extends React.Component {
 	}
 
 	initializeFox() {
+		console.log('initializeFox');
 		axios.get('/routes/api/foxArticles').then(res => {
 			this.setState({
 				fox: res.data,
@@ -51,6 +56,7 @@ export class Homepage extends React.Component {
 	}
 
 	initializeBreitbart() {
+		console.log('initializeBreitbart');
 		axios.get('/routes/api/breitbartArticles').then(res => {
 			this.setState({
 				breitbart: res.data,
@@ -60,6 +66,7 @@ export class Homepage extends React.Component {
 	}
 
 	initializeMsnbc() {
+		console.log('initializeMsnbc');
 		axios.get('/routes/api/msnbcArticles').then(res => {
 			this.setState({
 				msnbc: res.data,
@@ -68,8 +75,31 @@ export class Homepage extends React.Component {
 		});
 	}
 
+	onRefresh(e) {
+		e.preventDefault();
+		const targetElement = e.target;
+		const targetSite = e.target.value;
+		console.log('targetSite', targetSite);
 
-	
+		targetElement.style.display = 'none';
+		axios.post(`/routes/api/${targetSite}Articles/`).then(() => {
+			if (targetSite === 'cnn') {
+				this.initializeCnn();
+			}
+			if (targetSite === 'fox') {
+				this.initializeFox();
+			}
+			if (targetSite === 'breitbart') {
+				this.initializeBreitbart();
+			}
+			if (targetSite === 'msnbc') {
+				this.initializeMsnbc();
+			}
+		});
+		setTimeout(() => {
+			targetElement.style.display = 'block';
+		}, 1000);
+	}
 
 	render() {
 		return (
@@ -78,6 +108,9 @@ export class Homepage extends React.Component {
 					<div className="content" id="cnn-content">
 						<div className="news-site">
 							<h2>CNN</h2>
+							<button value="cnn" onClick={this.onRefresh}>
+								REFRESH
+							</button>
 						</div>
 						<Scrollbars universal autoHeight autoHeightMin={60 + 'vh'}>
 							{this.state.cnnIsLoading === true ? (
@@ -128,6 +161,9 @@ export class Homepage extends React.Component {
 					<div className="content" id="fox-content">
 						<div className="news-site">
 							<h2>Fox</h2>
+							<button value="fox" onClick={this.onRefresh}>
+								REFRESH
+							</button>
 						</div>
 						<Scrollbars universal autoHeight autoHeightMin={60 + 'vh'}>
 							{this.state.foxIsLoading === true ? (
@@ -181,6 +217,9 @@ export class Homepage extends React.Component {
 					<div className="content" id="breitbart-content">
 						<div className="news-site">
 							<h2>Breitbart</h2>
+							<button value="breitbart" onClick={this.onRefresh}>
+								REFRESH
+							</button>
 						</div>
 						<Scrollbars universal autoHeight autoHeightMin={60 + 'vh'}>
 							{this.state.breitbartIsLoading === true ? (
@@ -234,6 +273,9 @@ export class Homepage extends React.Component {
 					<div className="content" id="msnbc-content">
 						<div className="news-site">
 							<h2>MSNBC</h2>
+							<button value="msnbc" onClick={this.onRefresh}>
+								REFRESH
+							</button>
 						</div>
 						<Scrollbars universal autoHeight autoHeightMin={60 + 'vh'}>
 							{this.state.msnbcIsLoading === true ? (
