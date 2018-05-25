@@ -24,27 +24,42 @@ export class Homepage extends React.Component {
 	}
 
 	componentWillMount() {
+		this.initializeCnn();
+		this.initializeFox();
+		this.initializeBreitbart();
+		this.initializeMsnbc();
+	}
+
+	componentDidMount() {}
+
+	initializeCnn() {
 		axios.get('/routes/api/cnnArticles').then(res => {
 			this.setState({
 				cnn: res.data,
 				cnnIsLoading: false
 			});
 		});
+	}
 
+	initializeFox() {
 		axios.get('/routes/api/foxArticles').then(res => {
 			this.setState({
 				fox: res.data,
 				foxIsLoading: false
 			});
 		});
+	}
 
+	initializeBreitbart() {
 		axios.get('/routes/api/breitbartArticles').then(res => {
 			this.setState({
 				breitbart: res.data,
 				breitbartIsLoading: false
 			});
 		});
+	}
 
+	initializeMsnbc() {
 		axios.get('/routes/api/msnbcArticles').then(res => {
 			this.setState({
 				msnbc: res.data,
@@ -53,7 +68,8 @@ export class Homepage extends React.Component {
 		});
 	}
 
-	componentDidMount() {}
+
+	
 
 	render() {
 		return (

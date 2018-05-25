@@ -6,8 +6,8 @@ const Feed = require('rss-to-json');
 // Article Model
 const Article = require('../../models/Article.js');
 
-// @Route GET api/articles/
-// @Desc GET all articles route
+// @Route GET routes/api/msnbcArticles/
+// @Desc GET all articles with {site: "msnbc"}
 // @Access Public
 router.get('/', (req, res) => {
     Article.find({site: "msnbc"})
@@ -19,19 +19,18 @@ router.get('/', (req, res) => {
         );
 });
 
-// @Route GET /routes/api/msnbcArticles/test
-// @Desc TEST Get Route being called
+// @Route POST /routes/api/msnbcArticles/
+// @Desc POST to db.Articles new articles from msnbc
 // @Access Public
-router.post('/test', (req, res) => {
+router.post('/', (req, res) => {
     Feed.load('http://www.msnbc.com/feeds/latest', function(err, rss) {
         rss.items.map((rssArticles, index) => {
 
             const newArticle = new Article({
                 title: rssArticles.title,
-                site: "msnbc"
-                // ,
-                // created: rssArticles.created,
-                // url: rssArticles.url
+                site: "msnbc",
+                created: rssArticles.created,
+                url: rssArticles.url
             });
 
             //TODO: SEARCH DATABASE FOR DUPLICATE BEFORE ADDING

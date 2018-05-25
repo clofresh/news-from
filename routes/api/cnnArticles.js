@@ -7,7 +7,7 @@ const Feed = require('rss-to-json');
 const Article = require('../../models/Article.js');
 
 // @Route GET routes/api/cnnArticles/
-// @Desc GET all cnnArticles route
+// @Desc GET all articles with {site: "cnn"}
 // @Access Public
 router.get('/', (req, res) => {
     Article.find({site: "cnn"})
@@ -19,19 +19,18 @@ router.get('/', (req, res) => {
         );
 });
 
-// @Route GET /routes/api/cnnArticles/test
-// @Desc TEST Get Route being called
+// @Route POST /routes/api/cnnArticles/
+// @Desc POST to db.Articles new articles from cnn
 // @Access Public
-router.post('/test', (req, res) => {
+router.post('/', (req, res) => {
     Feed.load('http://rss.cnn.com/rss/cnn_topstories.rss', function(err, rss) {
         rss.items.map((rssArticles, index) => {
 
             const newArticle = new Article({
                 title: rssArticles.title,
-                site: "cnn"
-                // ,
-                // created: rssArticles.created,
-                // url: rssArticles.url
+                site: "cnn",
+                created: rssArticles.created,
+                url: rssArticles.url
             });
 
             //TODO: SEARCH DATABASE FOR DUPLICATE BEFORE ADDING

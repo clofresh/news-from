@@ -6,8 +6,8 @@ const Feed = require('rss-to-json');
 // Article Model
 const Article = require('../../models/Article.js');
 
-// @Route GET api/articles/
-// @Desc GET all articles route
+// @Route GET routes/api/foxAticles/
+// @Desc GET all articles with {site: "fox"}
 // @Access Public
 router.get('/', (req, res) => {
     Article.find({site: "fox"})
@@ -19,19 +19,18 @@ router.get('/', (req, res) => {
         );
 });
 
-// @Route GET /routes/api/foxArticles/test
-// @Desc TEST Get Route being called
+// @Route POST /routes/api/foxArticles/
+// @Desc POST to db.Articles new articles from fox
 // @Access Public
-router.post('/test', (req, res) => {
+router.post('/', (req, res) => {
     Feed.load('http://feeds.foxnews.com/foxnews/politics', function(err, rss) {
         rss.items.map((rssArticles, index) => {
 
             const newArticle = new Article({
                 title: rssArticles.title,
-                site: "fox"
-                // ,
-                // created: rssArticles.created,
-                // url: rssArticles.url
+                site: "fox",
+                created: rssArticles.created,
+                url: rssArticles.url
             });
 
             //TODO: SEARCH DATABASE FOR DUPLICATE BEFORE ADDING
