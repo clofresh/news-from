@@ -20,7 +20,7 @@
     "rss-to-json": "^1.0.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"react-scripts start\" \"PORT=5000 node server.js\"",
     "server": "nodemon server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
