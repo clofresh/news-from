@@ -79,9 +79,15 @@ export class Homepage extends React.Component {
 		e.preventDefault();
 		const targetElement = e.target;
 		const targetSite = e.target.value;
-		console.log('targetSite', targetSite);
+		const targetState = `${targetSite}IsLoading`;
 
+		console.log('targetSite', targetSite);
 		targetElement.style.display = 'none';
+
+		this.setState({
+			[targetState]: true
+		});
+
 		axios.post(`/routes/api/${targetSite}Articles/`).then(() => {
 			if (targetSite === 'cnn') {
 				this.initializeCnn();
@@ -96,9 +102,10 @@ export class Homepage extends React.Component {
 				this.initializeMsnbc();
 			}
 		});
+
 		setTimeout(() => {
 			targetElement.style.display = 'block';
-		}, 1000);
+		}, 5000);
 	}
 
 	render() {
@@ -108,9 +115,18 @@ export class Homepage extends React.Component {
 					<div className="content" id="cnn-content">
 						<div className="news-site">
 							<h2>CNN</h2>
-							<button value="cnn" onClick={this.onRefresh}>
-								REFRESH
-							</button>
+							{this.state.cnnIsLoading === true ? (
+								<img
+									className="loading-spinner"
+									src="/assets/images/news-from-logo.png"
+									alt="loading-spinner"
+									style={{ width: 50 + 'px', height: 50 + 'px' }}
+								/>
+							) : (
+								<button value="cnn" onClick={this.onRefresh}>
+									REFRESH
+								</button>
+							)}
 						</div>
 						<Scrollbars universal autoHeight autoHeightMin={60 + 'vh'}>
 							{this.state.cnnIsLoading === true ? (
@@ -161,9 +177,18 @@ export class Homepage extends React.Component {
 					<div className="content" id="fox-content">
 						<div className="news-site">
 							<h2>Fox</h2>
-							<button value="fox" onClick={this.onRefresh}>
-								REFRESH
-							</button>
+							{this.state.foxIsLoading === true ? (
+								<img
+									className="loading-spinner"
+									src="/assets/images/news-from-logo.png"
+									alt="loading-spinner"
+									style={{ width: 50 + 'px', height: 50 + 'px' }}
+								/>
+							) : (
+								<button value="fox" onClick={this.onRefresh}>
+									REFRESH
+								</button>
+							)}
 						</div>
 						<Scrollbars universal autoHeight autoHeightMin={60 + 'vh'}>
 							{this.state.foxIsLoading === true ? (
@@ -217,9 +242,18 @@ export class Homepage extends React.Component {
 					<div className="content" id="breitbart-content">
 						<div className="news-site">
 							<h2>Breitbart</h2>
-							<button value="breitbart" onClick={this.onRefresh}>
-								REFRESH
-							</button>
+							{this.state.breitbartIsLoading === true ? (
+								<img
+									className="loading-spinner"
+									src="/assets/images/news-from-logo.png"
+									alt="loading-spinner"
+									style={{ width: 50 + 'px', height: 50 + 'px' }}
+								/>
+							) : (
+								<button value="breitbart" onClick={this.onRefresh}>
+									REFRESH
+								</button>
+							)}
 						</div>
 						<Scrollbars universal autoHeight autoHeightMin={60 + 'vh'}>
 							{this.state.breitbartIsLoading === true ? (
@@ -273,9 +307,18 @@ export class Homepage extends React.Component {
 					<div className="content" id="msnbc-content">
 						<div className="news-site">
 							<h2>MSNBC</h2>
-							<button value="msnbc" onClick={this.onRefresh}>
-								REFRESH
-							</button>
+							{this.state.msnbcIsLoading === true ? (
+								<img
+									className="loading-spinner"
+									src="/assets/images/news-from-logo.png"
+									alt="loading-spinner"
+									style={{ width: 50 + 'px', height: 50 + 'px' }}
+								/>
+							) : (
+								<button value="msnbc" onClick={this.onRefresh}>
+									REFRESH
+								</button>
+							)}
 						</div>
 						<Scrollbars universal autoHeight autoHeightMin={60 + 'vh'}>
 							{this.state.msnbcIsLoading === true ? (

@@ -21,11 +21,12 @@
   },
   "scripts": {
     "start": "concurrently \"react-scripts start\" \"PORT=5000 node server.js\"",
+    "start-dev": "react-scripts start",
     "server": "nodemon server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "dev": "concurrently \"yarn run server\" \"yarn run start\"",
+    "dev": "concurrently \"yarn run server\" \"yarn run start-dev\"",
     "heroku-postbuild": "YARN_PRODUCTION=false yarn install && yarn run build"
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).",
