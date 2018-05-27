@@ -22,41 +22,38 @@ router.get('/', (req, res) => {
 // @Route POST /routes/api/msnbcArticles/
 // @Desc POST to db.Articles new articles from msnbc
 // @Access Public
+// 'http://www.msnbc.com/feeds/latest'
 router.post('/', (req, res) => {
-    Feed.load('http://www.msnbc.com/feeds/latest', function(err, rss) {
-        rss.items.map((rssArticles, index) => {
+  const articleArray = [];
+  const articleJSON = [];
 
-            const newArticle = new Article({
-                title: rssArticles.title,
-                site: "msnbc",
-                created: rssArticles.created,
-                url: rssArticles.url
-            });
+  Feed.load('http://www.msnbc.com/feeds/latest', function(err, rss) {
+    rss.items.map((rssArticles, index) => {
+      const newArticle = new Article({
+        title: rssArticles.title,
+        site: 'msnbc',
+        created: rssArticles.created,
+        url: rssArticles.url
+      });
+      articleArray.push(newArticle);
+    });
 
-            //TODO: SEARCH DATABASE FOR DUPLICATE BEFORE ADDING
-            // Article.findOne({ "title": newArticle.title }, (err, dbArticle) => {
-            //     console.log('dbArticle', dbArticle.title)
-            //     console.log('newArticle', newArticle.title)
-            //     if (dbArticle.title === newArticle.title) {
-            //         console.log("DUPLICATE")
-            //     } else {
-            //         console.log('ADD TO DATABASE NO MATCH', newArticle);
-            //         newArticle
-            //             .save((err, articleItem) => {
-            //                 if (err) return err;
-            //                 res.json(articleItem)
-            //             })
-            //     }
-            // });
+    articleArray.forEach((rssResult, index) => {
+      Article.findOne({ title: rssResult.title }, (err, dbResult) => {
+        if (!dbResult) {
+          console.log("NEW ENTRY");
+          rssResult.save()
+          articleJSON.push(rssResult)
+        } else {
+          console.log("DUPLICATE")
+        }
+      }).then(result => {
 
-            newArticle
-                .save()
-                .then(articleItem => {
-                    res.json(articleItem)
-                }).catch(error =>
-                    res.status(404).json({ newArticle_error: "POST ERROR: " + error }))
-        })
-    })
+        return res.json(result)
+      })
+    });
+  });
 });
+
 
 module.exports = router;

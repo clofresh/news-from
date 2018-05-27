@@ -6,6 +6,32 @@ const Feed = require('rss-to-json');
 // Article Model
 const Article = require('../../models/Article.js');
 
+// @Route Post routes/api/cnnArticles/test
+// @Desc post to db for testing purposes
+// @Access Public
+router.post('/test', (req, res) => {
+  const articleJSON = [];
+  Feed.load('http://rss.cnn.com/rss/cnn_topstories.rss', function(
+    err,
+    rssArticles
+  ) {
+    rssArticles.items.map((articles, index) => {
+      var newArticle = new Article({
+        title: articles.title,
+        site: 'cnn',
+        created: articles.created,
+        url: articles.url
+      });
+
+      newArticle.save().then(articleItems => {
+        console.log('NEW dbArticle', articleItems.title);
+        articleJSON.push(articleItems);
+        return res.json(articleItems);
+      });
+    });
+  });
+});
+
 // @Route GET routes/api/cnnArticles/
 // @Desc GET all articles with {site: "cnn"}
 // @Access Public
@@ -22,8 +48,11 @@ router.get('/', (req, res) => {
 // @Route POST /routes/api/cnnArticles/
 // @Desc POST to db.Articles new articles from cnn
 // @Access Public
+// 'http://rss.cnn.com/rss/cnn_topstories.rss'
 router.post('/', (req, res) => {
   const articleArray = [];
+  const articleJSON = [];
+
   Feed.load('http://rss.cnn.com/rss/cnn_topstories.rss', function(err, rss) {
     rss.items.map((rssArticles, index) => {
       const newArticle = new Article({
@@ -34,50 +63,51 @@ router.post('/', (req, res) => {
       });
       articleArray.push(newArticle);
     });
-    console.log("articleArray", articleArray)
-    articleArray.forEach((article, index) => {
-      article.save()
-        .then(articleItems => {
-          res.json(articleItems)
-        })
-    })
+
+    articleArray.forEach((rssResult, index) => {
+      Article.findOne({ title: rssResult.title }, (err, dbResult) => {
+        if (!dbResult) {
+          console.log("NEW ENTRY");
+          rssResult.save()
+          articleJSON.push(rssResult)
+        } else {
+          console.log("DUPLICATE")
+        }
+      }).then(result => {
+
+        return res.json(result)
+      })
+    });
   });
 });
 
 module.exports = router;
 
-// router.post('/', (req, res) => {
-//     Feed.load('http://rss.cnn.com/rss/cnn_topstories.rss', function(err, rss) {
-//         rss.items.map((rssArticles, index) => {
-
-//             const newArticle = new Article({
-//                 title: rssArticles.title,
-//                 site: "cnn",
-//                 created: rssArticles.created,
-//                 url: rssArticles.url
-//             });
-
-//             newArticle
-//                 .save()
-//                 .then(articleItem => {
-//                     res.json(articleItem)
-//                 }).catch(error =>
-//                     res.status(404).json({ newArticle_error: "POST ERROR: " + error }))
-//         })
-//     })
-// });
-
-// Article.findOne({ "title": newArticle.title }, (err, dbArticle) => {
-//     console.log('dbArticle', dbArticle.title)
-//     console.log('newArticle', newArticle.title)
-//     if (dbArticle.title === newArticle.title) {
-//         console.log("DUPLICATE")
-//     } else {
-//         console.log('ADD TO DATABASE NO MATCH', newArticle);
-//         newArticle
-//             .save((err, articleItem) => {
-//                 if (err) return err;
-//                 res.json(articleItem)
+// Article.find({}, (err, dbArticle) => {
+//   articleArray.forEach((newArticle, index) => {
+//     console.log('insideFIND()', dbArticle[index].title);
+//     if (dbArticle[index].title) {
+//       console.log('insideIF');
+//       Article.findOne({ title: newArticle.title }, (err, dbArticle) => {
+//         if (newArticle.title === dbArticle.title) {
+//           console.log('DUPLICATE dbArticle', dbArticle.title + index);
+//           console.log('DUPLICATE newArticle', newArticle.title + index);
+//         } else {
+//           newArticle.save()
+//             .then(articleItems => {
+//               console.log("NEW dbArticle", articleItems.title)
+//               articleJSON.push(articleItems)
 //             })
+//         }
+//       });
+//     } else {
+//       console.log('insideELSE');
+//       newArticle.save()
+//         .then(articleItems => {
+//           console.log("NEW dbArticle", articleItems.title)
+//           articleJSON.push(articleItems)
+//           return res.json(articleJSON)
+//         })
 //     }
+//   });
 // });

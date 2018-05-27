@@ -22,72 +22,75 @@ router.get('/', (req, res) => {
 // @Route POST /routes/api/breitbartArticles/
 // @Desc POST to db.Articles new articles from breitbart
 // @Access Public
+// 'http://feeds.feedburner.com/breitbart'
 router.post('/', (req, res) => {
-  const fetchRss = new Promise((resolve, reject) => {
-    Feed.load('http://feeds.feedburner.com/breitbart', (err, rss) => {
-      resolve(rss.items);
+  const articleArray = [];
+  const articleJSON = [];
+
+  Feed.load('http://feeds.feedburner.com/breitbart', function(err, rss) {
+    rss.items.map((rssArticles, index) => {
+      const newArticle = new Article({
+        title: rssArticles.title,
+        site: 'breitbart',
+        created: rssArticles.created,
+        url: rssArticles.url
+      });
+      articleArray.push(newArticle);
+    });
+
+    articleArray.forEach((rssResult, index) => {
+      Article.findOne({ title: rssResult.title }, (err, dbResult) => {
+        if (!dbResult) {
+          console.log("NEW ENTRY");
+          rssResult.save()
+          articleJSON.push(rssResult)
+        } else {
+          console.log("DUPLICATE")
+        }
+      }).then(result => {
+
+        return res.json(result)
+      })
     });
   });
-
-  Promise.all([fetchRss])
-    .then(rssObject => {
-      rssObject[0].forEach((rssArticles, index) => {
-        const newArticle = new Article({
-          title: rssArticles.title,
-          site: 'breitbart',
-          created: rssArticles.created,
-          url: rssArticles.url
-        });
-        newArticle
-          .save()
-          .then(articleItem => {
-            return res.json(articleItem);
-          })
-          .catch(error =>
-            res
-            .status(404)
-            .json({ newArticle_error: 'POST ERROR: ' + error })
-          );
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    });
 });
 
 module.exports = router;
 
-// rss.items.map((rssArticles, index) => {
 
-//            const newArticle = new Article({
-//                title: rssArticles.title,
-//                site: "breitbart",
-//                created: rssArticles.created,
-//                url: rssArticles.url
-//            });
 
-//            //TODO: SEARCH DATABASE FOR DUPLICATE BEFORE ADDING
-//            // Article.findOne({ "title": newArticle.title }, (err, dbArticle) => {
-//            //     console.log('dbArticle', dbArticle.title)
-//            //     console.log('newArticle', newArticle.title)
-//            //     if (dbArticle.title === newArticle.title) {
-//            //         console.log("DUPLICATE")
-//            //     } else {
-//            //         console.log('ADD TO DATABASE NO MATCH', newArticle);
-//            //         newArticle
-//            //             .save((err, articleItem) => {
-//            //                 if (err) return err;
-//            //                 res.json(articleItem)
-//            //             })
-//            //     }
-//            // });
+// @Route POST /routes/api/breitbartArticles/
+// @Desc POST to db.Articles new articles from breitbart
+// @Access Public
+// router.post('/', (req, res) => {
+//   const fetchRss = new Promise((resolve, reject) => {
+//     Feed.load('http://feeds.feedburner.com/breitbart', (err, rss) => {
+//       resolve(rss.items);
+//     });
+//   });
 
-//            newArticle
-//                .save()
-//                .then(articleItem => {
-//                    return res.json(articleItem)
-//                })
-//                .catch(error =>
-//                    res.status(404).json({ newArticle_error: "POST ERROR: " + error }))
-
-//        })
+//   Promise.all([fetchRss])
+//     .then(rssObject => {
+//       rssObject[0].forEach((rssArticles, index) => {
+//         const newArticle = new Article({
+//           title: rssArticles.title,
+//           site: 'breitbart',
+//           created: rssArticles.created,
+//           url: rssArticles.url
+//         });
+//         newArticle
+//           .save()
+//           .then(articleItem => {
+//             return res.json(articleItem);
+//           })
+//           .catch(error =>
+//             res
+//             .status(404)
+//             .json({ newArticle_error: 'POST ERROR: ' + error })
+//           );
+//       });
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+// });
