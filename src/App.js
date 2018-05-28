@@ -1,10 +1,10 @@
 // React Library
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Scrollbars from 'react-custom-scrollbars';
 
 // Components
 import Homepage from './pages/Homepage';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import './App.css';
 

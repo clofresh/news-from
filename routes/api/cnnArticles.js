@@ -49,6 +49,9 @@ router.get('/', (req, res) => {
 // @Desc POST to db.Articles new articles from cnn
 // @Access Public
 // 'http://rss.cnn.com/rss/cnn_topstories.rss'
+
+//TODO: REFACTOR AND OPTIMIZE 
+
 router.post('/', (req, res) => {
   const articleArray = [];
   const articleJSON = [];
@@ -74,7 +77,6 @@ router.post('/', (req, res) => {
           console.log("DUPLICATE")
         }
       }).then(result => {
-
         return res.json(result)
       })
     });

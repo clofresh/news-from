@@ -17,11 +17,13 @@ const cnnArticles = require('./routes/api/cnnArticles');
 const foxArticles = require('./routes/api/foxArticles');
 const breitbartArticles = require('./routes/api/breitbartArticles');
 const msnbcArticles = require('./routes/api/msnbcArticles');
+const allArticles = require('./routes/api/allArticles');
 
 app.use('/routes/api/cnnArticles', cnnArticles);
 app.use('/routes/api/foxArticles', foxArticles);
 app.use('/routes/api/breitbartArticles', breitbartArticles);
 app.use('/routes/api/msnbcArticles', msnbcArticles);
+app.use('/routes/api/allArticles/', allArticles)
 app.use('/api/cnn', cnnProvider);
 app.use('/api/breitbart', breitbartProvider);
 app.use('/api/msnbc', msnbcProvider);

@@ -23,6 +23,9 @@ router.get('/', (req, res) => {
 // @Desc POST to db.Articles new articles from fox
 // @Access Public
 // 'http://feeds.foxnews.com/foxnews/politics'
+
+//TODO: REFACTOR AND OPTIMIZE 
+
 router.post('/', (req, res) => {
   const articleArray = [];
   const articleJSON = [];

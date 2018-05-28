@@ -1,5 +1,9 @@
+// React Library
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
+
+// Homepage Components
+import Searchbar from '../../components/Searchbar';
 
 import axios from 'axios';
 import moment from 'moment';
@@ -32,7 +36,6 @@ export class Homepage extends React.Component {
 	}
 
 	componentDidMount() {
-		console.log('Mounted Component Homepage');
 	}
 
 	initializeCnn() {
@@ -111,6 +114,7 @@ export class Homepage extends React.Component {
 	render() {
 		return (
 			<div className="homepage">
+				<Searchbar />
 				<div className="container">
 					<div className="content" id="cnn-content">
 						<div className="news-site">

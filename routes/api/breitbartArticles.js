@@ -23,6 +23,9 @@ router.get('/', (req, res) => {
 // @Desc POST to db.Articles new articles from breitbart
 // @Access Public
 // 'http://feeds.feedburner.com/breitbart'
+
+//TODO: REFACTOR AND OPTIMIZE
+
 router.post('/', (req, res) => {
   const articleArray = [];
   const articleJSON = [];
@@ -41,23 +44,20 @@ router.post('/', (req, res) => {
     articleArray.forEach((rssResult, index) => {
       Article.findOne({ title: rssResult.title }, (err, dbResult) => {
         if (!dbResult) {
-          console.log("NEW ENTRY");
-          rssResult.save()
-          articleJSON.push(rssResult)
+          console.log('NEW ENTRY');
+          rssResult.save();
+          articleJSON.push(rssResult);
         } else {
-          console.log("DUPLICATE")
+          console.log('DUPLICATE');
         }
       }).then(result => {
-
-        return res.json(result)
-      })
+        return res.json(result);
+      });
     });
   });
 });
 
 module.exports = router;
-
-
 
 // @Route POST /routes/api/breitbartArticles/
 // @Desc POST to db.Articles new articles from breitbart

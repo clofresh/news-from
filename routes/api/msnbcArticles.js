@@ -23,6 +23,9 @@ router.get('/', (req, res) => {
 // @Desc POST to db.Articles new articles from msnbc
 // @Access Public
 // 'http://www.msnbc.com/feeds/latest'
+
+//TODO: REFACTOR AND OPTIMIZE 
+
 router.post('/', (req, res) => {
   const articleArray = [];
   const articleJSON = [];
