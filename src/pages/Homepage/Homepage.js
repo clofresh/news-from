@@ -1,14 +1,15 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
-
+import Searchbar from '../../components/Searchbar';
+import ChartComponent from "../../components/ChartComponent";
 import axios from 'axios';
 import moment from 'moment';
 
 import './Homepage.css';
 
 export class Homepage extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			cnnIsLoading: true,
 			foxIsLoading: true,
@@ -17,7 +18,8 @@ export class Homepage extends React.Component {
 			cnn: [],
 			fox: [],
 			breitbart: [],
-			msnbc: []
+			msnbc: [],
+			chartData: {}
 		};
 	}
 
@@ -77,6 +79,8 @@ export class Homepage extends React.Component {
 	render() {
 		return (
 			<div className="homepage">
+				<Searchbar />
+				<ChartComponent />
 				<div className="container">
 					<div className="content" id="cnn-content">
 						<div className="news-site">
