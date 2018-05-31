@@ -9,7 +9,7 @@ class Searchbar extends Component {
 			name: '',
 			value: '',
 			searchResults: [],
-		};
+		}
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 	}
@@ -38,8 +38,8 @@ class Searchbar extends Component {
 	componentWillMount() {
 	}
 
-	render() {
 
+	render() {
 		return (
 			<div className="searchbar-component">
 				<form>
@@ -59,6 +59,7 @@ class Searchbar extends Component {
 							<div key={results.site + index}>
 								{results.title} -----------------------> {results.site}
 							</div>
+							<div key={results.site + index}>{results.title} -----------------------> {results.site}</div>
 						</a>
 					);
 				})}

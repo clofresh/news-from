@@ -1,1 +1,1 @@
-export { default } from "./Searchbar.js";
+export { default } from "./Searchbar.js" 
