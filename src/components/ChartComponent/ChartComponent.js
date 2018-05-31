@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Chart, Bar, Line, Pie, Doughnut, defaults } from 'react-chartjs-2';
+import { Chart } from 'react-chartjs-2';
 import 'react-chartjs-2';
 import './ChartComponent.css';
 
@@ -15,7 +15,7 @@ class ChartComponent extends Component {
 				msnbc: 50
 			}
 		};
-		this.reRender= this.reRender.bind(this);
+		this.reRender = this.reRender.bind(this);
 	}
 
 	buildChart(data) {
@@ -65,8 +65,9 @@ class ChartComponent extends Component {
 				}
 			}
 		});
-		this.setState({ mainChart: ctx });
-		console.log('ctx', ctx);
+		this.setState({ mainChart: ctx }, function() {
+		console.log('this.state.mainChart', this.state.mainChart);
+		});
 	}
 
 	reRender(e) {
@@ -80,7 +81,7 @@ class ChartComponent extends Component {
 				}
 			},
 			function() {
-				console.log('chartData', this.state.chartData);
+				console.log('chartData;', this.state.chartData);
 			}
 		);
 	}
@@ -88,16 +89,15 @@ class ChartComponent extends Component {
 	componentDidMount() {
 		this.buildChart();
 	}
+
 	render() {
 		return (
-			<div>
 				<div className="chart-component">
 					<div className="canvas-wrapper">
 						<canvas id="myChart" />
 					</div>
 					<button onClick={this.reRender}>reRender</button>
 				</div>
-			</div>
 		);
 	}
 }
