@@ -79,7 +79,7 @@ class Searchbar extends Component {
 			});
 	}
 
-	componentWillMount() {}
+	componentWillMount() { }
 
 	render() {
 		const cnnMenu = (
@@ -87,7 +87,8 @@ class Searchbar extends Component {
 				{this.state.cnnMenuData.map((results, index) => {
 					return (
 						<a className="menu-link" key={results.url + index} href={results.url}>
-							<MenuItem key={results.site + index}>{results.title}</MenuItem>
+							<MenuItem key={results.site + index} onItemHover={function (a) { console.log(a) }}
+								onMouseEnter={function (a) { console.log(a) }} >{results.title}</MenuItem>
 						</a>
 					);
 				})}
@@ -98,7 +99,8 @@ class Searchbar extends Component {
 				{this.state.foxMenuData.map((results, index) => {
 					return (
 						<a className="menu-link" key={results.url + index} href={results.url}>
-							<MenuItem key={results.site + index}>{results.title}</MenuItem>
+							<MenuItem key={results.site + index} onItemHover={function (a) { console.log(a) }}
+								onMouseEnter={function (a) { console.log(a) }} >{results.title}</MenuItem>
 						</a>
 					);
 				})}
@@ -109,7 +111,8 @@ class Searchbar extends Component {
 				{this.state.breitbartMenuData.map((results, index) => {
 					return (
 						<a className="menu-link" key={results.url + index} href={results.url}>
-							<MenuItem key={results.site + index}>{results.title}</MenuItem>
+							<MenuItem key={results.site + index} onItemHover={function (a) { console.log(a) }}
+								onMouseEnter={function (a) { console.log(a) }} >{results.title}</MenuItem>
 						</a>
 					);
 				})}
@@ -120,7 +123,8 @@ class Searchbar extends Component {
 				{this.state.msnbcMenuData.map((results, index) => {
 					return (
 						<a className="menu-link" key={results.url + index} href={results.url}>
-							<MenuItem key={results.site + index}>{results.title}</MenuItem>
+							<MenuItem key={results.site + index} onItemHover={function (a) { console.log(a) }}
+								onMouseEnter={function (a) { console.log(a) }} >{results.title}</MenuItem>
 						</a>
 					);
 				})}
